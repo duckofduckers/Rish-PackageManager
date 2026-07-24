@@ -18,22 +18,18 @@ Using the installer is the **recommended and supported** installation method.
 
 ---
 
-## Installation
+## Package Manager
 
-Run the installer directly in Termux:
+To install the files run:
 
 ```sh
-bash <(curl -fsSL https://github.com/duckofduckers/Shizuku-Rish-Setup/raw/main/Installer)
+bash <(curl -fsS https://raw.githubusercontent.com/duckofduckers/Shizuku-Rish-Setup/main/PackageManager.sh) -install
 ```
 
----
-
-## Uninstallation
-
-To remove all files installed by the installer, run the uninstaller:
+To uninstall the file run:
 
 ```sh
-bash <(curl -fsSL https://github.com/duckofduckers/Shizuku-Rish-Setup/raw/main/Uninstaller)
+bash <(curl -fsS https://raw.githubusercontent.com/duckofduckers/Shizuku-Rish-Setup/main/PackageManager.sh) -uninstall
 ```
 
 ---
