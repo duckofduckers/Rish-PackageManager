@@ -44,5 +44,3 @@ https://github.com/duckofduckers/Shizuku-Rish-Setup/releases/tag/Release
 Only installs performed using the official installer are supported
 
 Modified scripts or manual installs may result in undefined behavior
-
-If something breaks, re-running the installer is recommended.
