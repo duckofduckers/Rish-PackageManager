@@ -1,30 +1,5 @@
 # Security Policy
 
-## Supported Installation
-
-The **only supported installation method** is using the official installer:
-
-```sh
-bash <(curl -fsSL https://github.com/duckofduckers/Shizuku-Rish-Setup/raw/main/Installer)
-```
-
-The installer always fetches the latest safe version from the repository to ensure fixes and updates are applied automatically.
-
-Manual installation of individual files or modified scripts is not supported and may lead to undefined behavior.
-
-
----
-
-## Uninstallation
-
-To safely remove all installed files, use the official uninstaller:
-
-```sh
-bash <(curl -fsSL https://github.com/duckofduckers/Shizuku-Rish-Setup/raw/main/Uninstaller)
-```
-
----
-
 Reporting Security Issues
 
 If you find a potential security vulnerability or bug:
