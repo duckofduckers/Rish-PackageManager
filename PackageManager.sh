@@ -7,7 +7,6 @@ YELLOW='\033[1;33m'
 X='\033[0m'
 
 [ -z "${BASH_VERSION:-}" ] && echo "${RED}[!] This script must be run with bash" && exit 1
-[ -z "${TERMUX_VERSION:-}" ] && echo "${RED}[!] This script must be ran in Termux" && exit 1
 
 BIN="/data/data/com.termux/files/usr/bin"
 RISH_BIN="$BIN/rish"
@@ -55,7 +54,7 @@ elif [[ "$MODE" == "-uninstall" ]]; then
         FILEPATH="$BIN/$NAME"
         if [[ -f "$FILEPATH" ]]; then
             echo -e "${YELLOW}[-] Uninstalling $NAME...${X}"
-            /bin/rm -f "$FILEPATH"
+            rm -f "$FILEPATH"
             if [[ ! -f "$FILEPATH" ]]; then
                 echo -e "${GREEN}[*] $NAME uninstalled successfully${X}"
                 ANY_DELETED=true
