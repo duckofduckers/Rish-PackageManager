@@ -2,14 +2,14 @@
 
 ## Overview
 
-This repository provides a **safe and consistent installer** for setting up **rish with Shizuku** inside **Termux**.
+This repository provides a **safe and consistent PackageManager** for setting up **rish** for **Shizuku** inside **Termux**.
 
 The installer handles:
 - Correct file placement
 - Permission setup
 - Basic validation to prevent silent failures
 
-Using the installer is the **recommended and supported** installation method.
+Using the installer is the **recommended and supported** installation method for **Termux**.
 
 ---
 
