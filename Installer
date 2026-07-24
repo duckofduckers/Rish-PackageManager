@@ -13,35 +13,38 @@ BIN="/data/data/com.termux/files/usr/bin"
 DEX_BIN="$BIN/rish_shizuku.dex"
 RISH_BIN="$BIN/rish"
 
-if [[ -f "$DEX_BIN" && -f "$RISH_BIN" ]]; then
-    echo -e "${BLUE}[+] Already installed rish files${X}"
-    exit 0
-fi
-
 declare -A files=(
     ["rish_shizuku.dex"]="https://github.com/duckofduckers/Shizuku-Rish-Setup/raw/main/rish_shizuku.dex"
     ["rish"]="https://github.com/duckofduckers/Shizuku-Rish-Setup/raw/main/rish"
 )
+
+all_exist=true
 
 for filename in "${!files[@]}"; do
     filepath="$BIN/$filename"
     url="${files[$filename]}"
 
     if [[ -f "$filepath" ]]; then
-        echo -e "${BLUE}[+] $filename already exists, skipping${X}"
-        continue
-    fi
-
-    echo -e "${YELLOW}[-] Installing $filename...${X}"
-    curl -fsS -L -o "$filepath" "$url"
-
-    if [[ "$filename" == "rish" ]]; then
-        chmod +x "$filepath"
-    fi
-
-    if [[ -f "$filepath" ]]; then
-        echo -e "${GREEN}[*] $filename installed successfully${X}"
+        echo -e "${YELLOW}[-] $filename found${X}"
     else
-        echo -e "${RED}[!] $filename not installed successfully${X}"
+        all_exist=false
+        echo -e "${YELLOW}[-] Installing $filename...${X}"
+        curl -fsS -L -o "$filepath" "$url"
+
+        if [[ "$filename" == "rish" ]]; then
+            chmod +x "$filepath"
+        fi
+
+        if [[ -f "$filepath" ]]; then
+            echo -e "${GREEN}[*] $filename installed successfully${X}"
+        else
+            echo -e "${RED}[!] $filename not installed successfully${X}"
+        fi
     fi
 done
+
+if [[ "$all_exist" == true ]]; then
+    echo -e "${BLUE}[*] rish files already exist${X}"
+fi
+
+unset RED GREEN YELLOW BLUE X BIN DEX_BIN RISH_BIN files all_exist filename filepath url
