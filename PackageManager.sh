@@ -7,12 +7,13 @@ YELLOW='\033[1;33m'
 X='\033[0m'
 
 [ -z "${BASH_VERSION:-}" ] && echo "${RED}[!] This script must be run with bash" && exit 1
+[ -z "${TERMUX_VERSION:-}" ] && echo "${RED}[!] This script must be ran in Termux" && exit 1
 
 BIN="/data/data/com.termux/files/usr/bin"
 RISH_BIN="$BIN/rish"
 DEX_BIN="$BIN/rish_shizuku.dex"
 
-MODE="${1,,}"
+MODE="$1"
 
 if [[ "$MODE" != "-install" && "$MODE" != "-uninstall" ]]; then
     echo -e "${RED}[!] Usage: $0 [-install|-uninstall]${X}"
