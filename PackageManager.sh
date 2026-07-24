@@ -13,7 +13,7 @@ BIN="/data/data/com.termux/files/usr/bin"
 RISH_BIN="$BIN/rish"
 DEX_BIN="$BIN/rish_shizuku.dex"
 
-MODE="$1"
+MODE="${1,,}"
 
 if [[ "$MODE" != "-install" && "$MODE" != "-uninstall" ]]; then
     echo -e "${RED}[!] Usage: $0 [-install|-uninstall]${X}"
