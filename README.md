@@ -29,16 +29,6 @@ bash <(curl -fsS https://raw.githubusercontent.com/duckofduckers/Shizuku-Rish-Se
 
 ---
 
-## Releases
-
-The Releases page is provided for reference and transparency:
-
-https://github.com/duckofduckers/Shizuku-Rish-Setup/releases/tag/Release
-
-> ⚠️ Manual installation from release assets is not recommended and is not officially supported.
-
----
-
 ## Notes
 
 Only installs performed using the official installer are supported
