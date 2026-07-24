@@ -2,7 +2,7 @@
 
 ## Overview
 
-This repository provides a **safe and consistent PackageManager** for setting up **rish** for **Shizuku** inside **Termux**.
+This repository provides a **safe and consistent, open-source PackageManager** for setting up **rish** for **Shizuku** inside **Termux**.
 
 Using my PackageManager is the **recommended and supported** installation/uninstallation method for **Termux** via 3rd party.
 
