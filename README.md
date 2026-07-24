@@ -1,10 +1,5 @@
 # Shizuku Rish Setup (Termux)
 
-🔗 **Official Releases:**  
-https://github.com/duckofduckers/Shizuku-Rish-Setup/releases/tag/Release
-
----
-
 ## Overview
 
 This repository provides a **safe and consistent installer** for setting up **rish with Shizuku** inside **Termux**.
