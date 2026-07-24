@@ -29,3 +29,5 @@ bash <(curl -fsS https://raw.githubusercontent.com/duckofduckers/Shizuku-Rish-Se
 Only installs performed using the official installer are supported
 
 Modified scripts or manual installs may result in undefined behavior
+
+If installation/uninstallation fails re-running the PackageManager is recommended.
