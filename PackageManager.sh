@@ -16,7 +16,7 @@ DEX_BIN="$BIN/rish_shizuku.dex"
 MODE="${1,,}"
 
 if [[ "$MODE" != "-install" && "$MODE" != "-uninstall" ]]; then
-    echo -e "${RED}[!] Usage: [-install|-uninstall]${X}"
+    echo -e "${BLUE}[*] Usage: [-install|-uninstall]${X}"
     exit 1
 fi
 
