@@ -1,4 +1,4 @@
-# Shizuku Rish Setup (Termux)
+# Rish Package Manager (Termux)
 
 ## Overview
 
@@ -13,13 +13,13 @@ Using my PackageManager is the **recommended and fully supported** installation/
 To install the files via PackageManager.sh run:
 
 ```sh
-bash <(curl -fsS https://raw.githubusercontent.com/duckofduckers/Shizuku-Rish-Setup/main/PackageManager.sh) -install
+bash <(curl -fsS https://raw.githubusercontent.com/duckofduckers/Rish-PackageManager/main/PackageManager.sh) -install
 ```
 
 To uninstall the files via PackageManager.sh run:
 
 ```sh
-bash <(curl -fsS https://raw.githubusercontent.com/duckofduckers/Shizuku-Rish-Setup/main/PackageManager.sh) -uninstall
+bash <(curl -fsS https://raw.githubusercontent.com/duckofduckers/Rish-PackageManager/main/PackageManager.sh) -uninstall
 ```
 
 ---
