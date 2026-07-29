@@ -62,7 +62,7 @@ if [[ "$MODE" == "-install" ]]; then
         echo -e "${RED}[!] Shizuku APK downloaded unsuccessfully${X}"
         exit 1
     fi
-    echo -e "${GREEN}[*] Shizuku APK downloaded successfully${X}"
+    echo -e "${GREEN}[+] Shizuku APK downloaded successfully${X}"
 
     EXTRACT_FAILED=false
     for NAME in rish rish_shizuku.dex; do
@@ -72,7 +72,7 @@ if [[ "$MODE" == "-install" ]]; then
             EXTRACT_FAILED=true
             break
         else
-            echo -e "${GREEN}[*] $NAME extracted successfully${X}"
+            echo -e "${GREEN}[+] $NAME extracted successfully${X}"
         fi
     done
 
@@ -82,7 +82,7 @@ if [[ "$MODE" == "-install" ]]; then
 
     echo -e "${YELLOW}[-] Patching rish${X}"
     if sed -i 's/PKG/com.termux/g' "$TMPDIR/rish"; then
-        echo -e "${GREEN}[*] rish patched successfully${X}"
+        echo -e "${GREEN}[+] rish patched successfully${X}"
     else
         echo -e "${RED}[!] rish patched unsuccessfully${X}"
         exit 1
@@ -113,7 +113,7 @@ if [[ "$MODE" == "-uninstall" ]]; then
             echo -e "${YELLOW}[-] Uninstalling $NAME...${X}"
             rm -f "$FILEPATH"
             if [[ ! -f "$FILEPATH" ]]; then
-                echo -e "${GREEN}[*] $NAME uninstalled successfully${X}"
+                echo -e "${GREEN}[+] $NAME uninstalled successfully${X}"
                 ANY_DELETED=true
             fi
         else
