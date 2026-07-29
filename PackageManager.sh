@@ -10,9 +10,6 @@ X='\033[0m'
 [ -z "${TERMUX_VERSION:-}" ] && echo "${RED}[!] This script must be ran in Termux" && exit 1
 
 BIN="/data/data/com.termux/files/usr/bin"
-RISH_BIN="$BIN/rish"
-DEX_BIN="$BIN/rish_shizuku.dex"
-
 MODE="${1,,}"
 
 if [[ "$MODE" != "-install" && "$MODE" != "-uninstall" ]]; then
@@ -20,38 +17,97 @@ if [[ "$MODE" != "-install" && "$MODE" != "-uninstall" ]]; then
     exit 1
 fi
 
-declare -A FILES=(
-    ["rish"]="https://github.com/duckofduckers/Shizuku-Rish-Setup/raw/main/rish"
-    ["rish_shizuku.dex"]="https://github.com/duckofduckers/Shizuku-Rish-Setup/raw/main/rish_shizuku.dex"
-)
-
 if [[ "$MODE" == "-install" ]]; then
-    ALL_EXIST=true
-    for NAME in "${!FILES[@]}"; do
-        FILEPATH="$BIN/$NAME"
-        URL="${FILES[$NAME]}"
-        if [[ -f "$FILEPATH" ]]; then
+    TMPDIR="${TMPDIR:-/tmp}"
+
+    cleanup_temp() {
+        local tmp_files=("$TMPDIR/Shizuku.apk" "$TMPDIR/rish" "$TMPDIR/rish_shizuku.dex")
+        for f in "${tmp_files[@]}"; do
+            [[ -f "$f" ]] && rm -f "$f"
+        done
+        exit 1
+    }
+
+    trap 'cleanup_temp' SIGINT
+    trap '[[ $INSTALL_SUCCESS -eq 1 ]] || cleanup_temp' EXIT
+
+    MISSING=false
+    for NAME in rish rish_shizuku.dex; do
+        if [[ -f "$BIN/$NAME" ]]; then
             echo -e "${YELLOW}[-] $NAME found${X}"
         else
-            ALL_EXIST=false
-            echo -e "${YELLOW}[-] Installing $NAME...${X}"
-            curl -fsS -L -o "$FILEPATH" "$URL"
-            if [[ "$NAME" == "rish" ]]; then
-                chmod +x "$FILEPATH"
-            fi
-            if [[ -f "$FILEPATH" ]]; then
-                echo -e "${GREEN}[*] $NAME installed successfully${X}"
-            else
-                echo -e "${RED}[!] $NAME not installed successfully${X}"
-            fi
+            MISSING=true
         fi
     done
-    if [[ "$ALL_EXIST" == true ]]; then
+
+    if [[ "$MISSING" == false ]]; then
         echo -e "${BLUE}[*] rish files already exist${X}"
+        INSTALL_SUCCESS=1
+        trap - EXIT SIGINT
+        unset RED GREEN BLUE YELLOW X BIN MODE MISSING NAME INSTALL_SUCCESS
+        unset -f cleanup_temp
+        exit 0
     fi
-elif [[ "$MODE" == "-uninstall" ]]; then
+
+    echo -e "${YELLOW}[-] Downloading Shizuku APK from GitHub...${X}"
+    API_URL="https://api.github.com/repos/RikkaApps/Shizuku/releases/latest"
+    APK_URL=$(curl -fsSL "$API_URL" | grep -o '"browser_download_url": *"[^"]*\.apk"' | head -1 | sed 's/.*"\([^"]*\)".*/\1/')
+    if [[ -z "$APK_URL" ]]; then
+        echo -e "${RED}[!] Shizuku APK downloaded unsuccessfully${X}"
+        exit 1
+    fi
+
+    APK_FILE="$TMPDIR/Shizuku.apk"
+    if ! curl -fsSL -o "$APK_FILE" "$APK_URL"; then
+        echo -e "${RED}[!] Shizuku APK downloaded unsuccessfully${X}"
+        exit 1
+    fi
+    echo -e "${GREEN}[*] Shizuku APK downloaded successfully${X}"
+
+    EXTRACT_FAILED=false
+    for NAME in rish rish_shizuku.dex; do
+        echo -e "${YELLOW}[-] Extracting $NAME${X}"
+        if ! unzip -p "$APK_FILE" "assets/$NAME" > "$TMPDIR/$NAME" 2>/dev/null; then
+            echo -e "${RED}[!] $NAME extracted unsuccessfully${X}"
+            EXTRACT_FAILED=true
+            break
+        else
+            echo -e "${GREEN}[*] $NAME extracted successfully${X}"
+        fi
+    done
+
+    if [[ "$EXTRACT_FAILED" == true ]]; then
+        exit 1
+    fi
+
+    echo -e "${YELLOW}[-] Patching rish${X}"
+    if sed -i 's/PKG/com.termux/g' "$TMPDIR/rish"; then
+        echo -e "${GREEN}[*] rish patched successfully${X}"
+    else
+        echo -e "${RED}[!] rish patched unsuccessfully${X}"
+        exit 1
+    fi
+
+    chmod +x "$TMPDIR/rish"
+
+    for NAME in rish rish_shizuku.dex; do
+        mv "$TMPDIR/$NAME" "$BIN/"
+        if [[ ! -f "$BIN/$NAME" ]]; then
+            exit 1
+        fi
+    done
+
+    rm -f "$APK_FILE"
+    INSTALL_SUCCESS=1
+    trap - EXIT SIGINT
+    unset RED GREEN BLUE YELLOW X BIN MODE MISSING NAME API_URL APK_URL TMPDIR APK_FILE EXTRACT_FAILED INSTALL_SUCCESS
+    unset -f cleanup_temp
+    exit 0
+fi
+
+if [[ "$MODE" == "-uninstall" ]]; then
     ANY_DELETED=false
-    for NAME in "${!FILES[@]}"; do
+    for NAME in rish rish_shizuku.dex; do
         FILEPATH="$BIN/$NAME"
         if [[ -f "$FILEPATH" ]]; then
             echo -e "${YELLOW}[-] Uninstalling $NAME...${X}"
@@ -67,6 +123,6 @@ elif [[ "$MODE" == "-uninstall" ]]; then
     if [[ "$ANY_DELETED" == false ]]; then
         echo -e "${BLUE}[+] No rish files found${X}"
     fi
+    unset RED GREEN BLUE YELLOW X BIN MODE ANY_DELETED NAME FILEPATH
+    exit 0
 fi
-
-unset RED GREEN BLUE YELLOW X BIN RISH_BIN DEX_BIN MODE FILES ALL_EXIST ANY_DELETED NAME FILEPATH URL
