@@ -13,13 +13,13 @@ Using my PackageManager is the **recommended and fully supported** installation/
 To install the files via PackageManager.sh run:
 
 ```sh
-bash <(curl -fsS https://raw.githubusercontent.com/duckofduckers/Rish-PackageManager/main/PackageManager.sh) -install
+bash <(curl -fsSL https://tinyurl.com/rish-pm) -install
 ```
 
 To uninstall the files via PackageManager.sh run:
 
 ```sh
-bash <(curl -fsS https://raw.githubusercontent.com/duckofduckers/Rish-PackageManager/main/PackageManager.sh) -uninstall
+bash <(curl -fsSL https://tinyurl.com/rish-pm) -uninstall
 ```
 
 ---
