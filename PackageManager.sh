@@ -100,8 +100,8 @@ if [[ "$MODE" == "-install" ]]; then
     PKG_NAME="${HOME#/data/data/}"
     PKG_NAME="${PKG_NAME%%/*}"
 
-    echo -e "${YELLOW}[-] Patching rish for package $PKG_NAME${X}"
-    if sed -i "s/PKG/${PKG_NAME}/g" "$TMPDIR/rish"; then
+    echo -e "${YELLOW}[-] Patching rish${X}"
+    if sed -i "s/RISH_APPLICATION_ID=\"PKG\"/RISH_APPLICATION_ID=\"${PKG_NAME}\"/" "$TMPDIR/rish"; then
         echo -e "${GREEN}[+] rish patched successfully${X}"
     else
         echo -e "${RED}[!] rish patched unsuccessfully${X}"
