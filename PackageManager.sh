@@ -49,20 +49,37 @@ if [[ "$MODE" == "-install" ]]; then
         exit 0
     fi
 
-    echo -e "${YELLOW}[-] Downloading Shizuku APK from GitHub...${X}"
-    API_URL="https://api.github.com/repos/RikkaApps/Shizuku/releases/latest"
-    APK_URL=$(curl -fsSL "$API_URL" | grep -o '"browser_download_url": *"[^"]*\.apk"' | head -1 | sed 's/.*"\([^"]*\)".*/\1/')
-    if [[ -z "$APK_URL" ]]; then
-        echo -e "${RED}[!] Shizuku APK downloaded unsuccessfully${X}"
-        exit 1
+    APK_FILE="$TMPDIR/Shizuku.apk"
+    SHIZUKU_PATH=""
+    if command -v cmd >/dev/null 2>&1; then
+        SHIZUKU_PATH=$(cmd package path moe.shizuku.privileged.api --user 0 2>/dev/null | grep -oE 'package:(.*)' | sed 's/package://')
     fi
 
-    APK_FILE="$TMPDIR/Shizuku.apk"
-    if ! curl -fsSL -o "$APK_FILE" "$APK_URL"; then
-        echo -e "${RED}[!] Shizuku APK downloaded unsuccessfully${X}"
-        exit 1
+    if [[ -n "$SHIZUKU_PATH" && -f "$SHIZUKU_PATH" ]]; then
+        echo -e "${YELLOW}[-] Shizuku found locally, copying APK...${X}"
+        if cp "$SHIZUKU_PATH" "$APK_FILE" 2>/dev/null; then
+            echo -e "${GREEN}[+] Shizuku APK copied from local installation${X}"
+        else
+            echo -e "${RED}[!] Failed to copy Shizuku APK, falling back to download${X}"
+            SHIZUKU_PATH=""
+        fi
     fi
-    echo -e "${GREEN}[+] Shizuku APK downloaded successfully${X}"
+
+    if [[ -z "$SHIZUKU_PATH" ]]; then
+        echo -e "${YELLOW}[-] Downloading Shizuku APK from GitHub...${X}"
+        API_URL="https://api.github.com/repos/RikkaApps/Shizuku/releases/latest"
+        APK_URL=$(curl -fsSL "$API_URL" | grep -o '"browser_download_url": *"[^"]*\.apk"' | head -1 | sed 's/.*"\([^"]*\)".*/\1/')
+        if [[ -z "$APK_URL" ]]; then
+            echo -e "${RED}[!] Shizuku APK downloaded unsuccessfully${X}"
+            exit 1
+        fi
+
+        if ! curl -fsSL -o "$APK_FILE" "$APK_URL"; then
+            echo -e "${RED}[!] Shizuku APK downloaded unsuccessfully${X}"
+            exit 1
+        fi
+        echo -e "${GREEN}[+] Shizuku APK downloaded successfully${X}"
+    fi
 
     EXTRACT_FAILED=false
     for NAME in rish rish_shizuku.dex; do
@@ -80,8 +97,11 @@ if [[ "$MODE" == "-install" ]]; then
         exit 1
     fi
 
-    echo -e "${YELLOW}[-] Patching rish${X}"
-    if sed -i 's/PKG/com.termux/g' "$TMPDIR/rish"; then
+    PKG_NAME="${HOME#/data/data/}"
+    PKG_NAME="${PKG_NAME%%/*}"
+
+    echo -e "${YELLOW}[-] Patching rish for package $PKG_NAME${X}"
+    if sed -i "s/PKG/${PKG_NAME}/g" "$TMPDIR/rish"; then
         echo -e "${GREEN}[+] rish patched successfully${X}"
     else
         echo -e "${RED}[!] rish patched unsuccessfully${X}"
@@ -100,7 +120,7 @@ if [[ "$MODE" == "-install" ]]; then
     rm -f "$APK_FILE"
     INSTALL_SUCCESS=1
     trap - EXIT SIGINT
-    unset RED GREEN BLUE YELLOW X BIN MODE MISSING NAME API_URL APK_URL TMPDIR APK_FILE EXTRACT_FAILED INSTALL_SUCCESS
+    unset RED GREEN BLUE YELLOW X BIN MODE MISSING NAME API_URL APK_URL TMPDIR APK_FILE EXTRACT_FAILED INSTALL_SUCCESS SHIZUKU_PATH PKG_NAME
     unset -f cleanup_temp
     exit 0
 fi
