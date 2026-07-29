@@ -19,4 +19,4 @@ If you find a potential security vulnerability or bug:
 
 ## Maintainer Policy
 
-This project is maintained solely by the author. All installer and uninstaller updates are reviewed and released only by the maintainer to ensure security and consistency.
+This project is maintained solely by the author. All PackageManager.sh updates are reviewed and released only by the maintainer to ensure security and consistency.
