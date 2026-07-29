@@ -24,6 +24,14 @@ bash <(curl -fsSL https://tinyurl.com/rish-pm) -uninstall
 
 ---
 
+## Shizuku Repository
+
+This is required.
+
+https://github.com/RikkaApps/Shizuku
+
+---
+
 ## Notes
 
 Only installs performed using the official installer are supported
