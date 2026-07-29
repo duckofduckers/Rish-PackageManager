@@ -121,7 +121,7 @@ if [[ "$MODE" == "-uninstall" ]]; then
         fi
     done
     if [[ "$ANY_DELETED" == false ]]; then
-        echo -e "${BLUE}[+] No rish files found${X}"
+        echo -e "${BLUE}[*] No rish files found${X}"
     fi
     unset RED GREEN BLUE YELLOW X BIN MODE ANY_DELETED NAME FILEPATH
     exit 0
