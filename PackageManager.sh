@@ -12,9 +12,29 @@ X='\033[0m'
 BIN="/data/data/com.termux/files/usr/bin"
 MODE="${1,,}"
 
-if [[ "$MODE" != "-install" && "$MODE" != "-uninstall" ]]; then
-    echo -e "${BLUE}[*] Usage: [-install|-uninstall]${X}"
+if [[ "$MODE" != "-install" && "$MODE" != "-uninstall" && "$MODE" != "-reinstall" ]]; then
+    echo -e "${BLUE}[*] Usage: [-install|-uninstall|-reinstall]${X}"
     exit 1
+fi
+
+if [[ "$MODE" == "-reinstall" ]]; then
+    ANY_FOUND=false
+    for NAME in rish rish_shizuku.dex; do
+        FILEPATH="$BIN/$NAME"
+        if [[ -f "$FILEPATH" ]]; then
+            echo -e "${YELLOW}[-] Uninstalling $NAME...${X}"
+            rm -f "$FILEPATH"
+            echo -e "${GREEN}[+] $NAME uninstalled successfully${X}"
+            ANY_FOUND=true
+        else
+            echo -e "${YELLOW}[-] $NAME not found${X}"
+        fi
+    done
+    if [[ "$ANY_FOUND" == false ]]; then
+        echo -e "${BLUE}[*] No rish files found${X}"
+        exit 0
+    fi
+    MODE="-install"
 fi
 
 if [[ "$MODE" == "-install" ]]; then
