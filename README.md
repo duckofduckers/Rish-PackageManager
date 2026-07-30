@@ -12,7 +12,13 @@ Using my PackageManager is the **recommended and fully supported** installation/
 
 Run this command for info.
 ```sh
-$ bash <(curl -fsSL https://tinyurl.com/rish-pm)
+bash <(curl -fsSL https://tinyurl.com/rish-pm)
+```
+
+And you can run this command for info but it has a direct link.
+
+```sh
+bash <(curl -fsSL https://raw.githubusercontent.com/duckofduckers/Rish-PackageManager/refs/heads/main/PackageManager.sh)
 ```
 
 ---
