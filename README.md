@@ -27,7 +27,7 @@ bash <(curl -fsSL https://raw.githubusercontent.com/duckofduckers/Rish-PackageMa
 
 This is required.
 
-https://github.com/RikkaApps/Shizuku
+🔗 https://github.com/RikkaApps/Shizuku
 
 ---
 
