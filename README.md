@@ -10,16 +10,9 @@ Using my PackageManager is the **recommended and fully supported** installation/
 
 ## Package Manager
 
-To install the files via PackageManager.sh run:
-
+Run this command for info.
 ```sh
-bash <(curl -fsSL https://tinyurl.com/rish-pm) -install
-```
-
-To uninstall the files via PackageManager.sh run:
-
-```sh
-bash <(curl -fsSL https://tinyurl.com/rish-pm) -uninstall
+$ bash <(curl -fsSL https://tinyurl.com/rish-pm)
 ```
 
 ---
@@ -34,8 +27,8 @@ https://github.com/RikkaApps/Shizuku
 
 ## Notes
 
-Only installs performed using the official installer are supported
+Only installs performed using the official installer are supported.
 
-Modified scripts or manual installs may result in undefined behavior
+Modified scripts or manual installs may result in undefined behavior.
 
 If installation/uninstallation fails re-running the PackageManager is recommended.
