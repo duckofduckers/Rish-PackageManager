@@ -9,7 +9,17 @@ X='\033[0m'
 [ -z "${BASH_VERSION:-}" ] && echo "${RED}[!] This script must be run with bash" && exit 1
 [ -z "${TERMUX_VERSION:-}" ] && echo "${RED}[!] This script must be ran in Termux" && exit 1
 
-BIN=$(dirname $(command -v sh))
+if cmd_path=$(command -v sh) && [ -n "$cmd_path" ]; then
+    BIN=$(dirname "$cmd_path")
+else
+    BIN="${PREFIX}/bin"
+    if [ ! -d "$BIN" ]; then
+        echo -e "${RED}[!] BIN directory could not be found, you have a weird ass environment${X}"
+        unset cmd_path
+        exit 1
+    fi
+fi
+unset cmd_path
 MODE="${1,,}"
 
 if [[ "$MODE" != "-install" && "$MODE" != "-uninstall" && "$MODE" != "-reinstall" ]]; then
