@@ -9,6 +9,11 @@ X='\033[0m'
 [ -z "${BASH_VERSION:-}" ] && echo "${RED}[!] This script must be run with bash" && exit 1
 [ -z "${TERMUX_VERSION:-}" ] && echo "${RED}[!] This script must be ran in Termux" && exit 1
 
+if [ "$(id -u)" -eq 0 ]; then
+    echo -e "${RED}[!] This script cannot be run as root${X}"
+    exit 1
+fi
+
 if cmd_path=$(command -v sh) && [ -n "$cmd_path" ]; then
     BIN=$(dirname "$cmd_path")
 else
@@ -48,10 +53,10 @@ if [[ "$MODE" == "-reinstall" ]]; then
 fi
 
 if [[ "$MODE" == "-install" ]]; then
-    TMPDIR="${TMPDIR:-/tmp}"
+    TMP=$(dirname "$(mktemp -u)")
 
     cleanup_temp() {
-        local tmp_files=("$TMPDIR/Shizuku.apk" "$TMPDIR/rish" "$TMPDIR/rish_shizuku.dex")
+        local tmp_files=("$TMP/Shizuku.apk" "$TMP/rish" "$TMP/rish_shizuku.dex")
         for f in "${tmp_files[@]}"; do
             [[ -f "$f" ]] && rm -f "$f"
         done
@@ -79,7 +84,7 @@ if [[ "$MODE" == "-install" ]]; then
         exit 0
     fi
 
-    APK_FILE="$TMPDIR/Shizuku.apk"
+    APK_FILE="$TMP/Shizuku.apk"
     SHIZUKU_PATH=""
     if command -v cmd >/dev/null 2>&1; then
         SHIZUKU_PATH=$(cmd package path moe.shizuku.privileged.api --user 0 2>/dev/null | grep -oE 'package:(.*)' | sed 's/package://')
@@ -114,7 +119,7 @@ if [[ "$MODE" == "-install" ]]; then
     EXTRACT_FAILED=false
     for NAME in rish rish_shizuku.dex; do
         echo -e "${YELLOW}[-] Extracting $NAME${X}"
-        if ! unzip -p "$APK_FILE" "assets/$NAME" > "$TMPDIR/$NAME" 2>/dev/null; then
+        if ! unzip -p "$APK_FILE" "assets/$NAME" > "$TMP/$NAME" 2>/dev/null; then
             echo -e "${RED}[!] $NAME extracted unsuccessfully${X}"
             EXTRACT_FAILED=true
             break
@@ -131,17 +136,17 @@ if [[ "$MODE" == "-install" ]]; then
     PKG_NAME="${PKG_NAME%%/*}"
 
     echo -e "${YELLOW}[-] Patching rish${X}"
-    if sed -i "s/RISH_APPLICATION_ID=\"PKG\"/RISH_APPLICATION_ID=\"${PKG_NAME}\"/" "$TMPDIR/rish"; then
+    if sed -i "s/RISH_APPLICATION_ID=\"PKG\"/RISH_APPLICATION_ID=\"${PKG_NAME}\"/" "$TMP/rish"; then
         echo -e "${GREEN}[+] rish patched successfully${X}"
     else
         echo -e "${RED}[!] rish patched unsuccessfully${X}"
         exit 1
     fi
 
-    chmod +x "$TMPDIR/rish"
+    chmod +x "$TMP/rish"
 
     for NAME in rish rish_shizuku.dex; do
-        mv "$TMPDIR/$NAME" "$BIN/"
+        mv "$TMP/$NAME" "$BIN/"
         if [[ ! -f "$BIN/$NAME" ]]; then
             exit 1
         fi
@@ -150,7 +155,7 @@ if [[ "$MODE" == "-install" ]]; then
     rm -f "$APK_FILE"
     INSTALL_SUCCESS=1
     trap - EXIT SIGINT
-    unset RED GREEN BLUE YELLOW X BIN MODE MISSING NAME API_URL APK_URL TMPDIR APK_FILE EXTRACT_FAILED INSTALL_SUCCESS SHIZUKU_PATH PKG_NAME
+    unset RED GREEN BLUE YELLOW X BIN MODE MISSING NAME API_URL APK_URL TMP APK_FILE EXTRACT_FAILED INSTALL_SUCCESS SHIZUKU_PATH PKG_NAME
     unset -f cleanup_temp
     exit 0
 fi
