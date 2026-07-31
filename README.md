@@ -16,10 +16,14 @@ For other shells, use the appropriate commands below.
 ```sh
 # Bash (recommended)
 bash <(curl -fsSL https://tinyurl.com/rish-pm)
+```
 
+```zsh
 # Zsh
 zsh <(curl -fsSL https://tinyurl.com/rish-pm)
+```
 
+```ksh
 # Ksh
 ksh <(curl -fsSL https://tinyurl.com/rish-pm)
 ```
