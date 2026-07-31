@@ -130,7 +130,7 @@ if [[ "$MODE" == "-install" ]]; then
         exit 1
     fi
 
-    PKG_NAME="${HOME#/data/data/}"
+    PKG_NAME="${BIN#/data/data/}"
     PKG_NAME="${PKG_NAME%%/*}"
 
     echo -e "${YELLOW}[-] Patching rish${X}"
