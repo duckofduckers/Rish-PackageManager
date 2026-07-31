@@ -10,8 +10,8 @@ Using my PackageManager is the **recommended and fully supported** installation/
 
 ## Package Manager
 
-Run this command for info (requires Bash).
-For other shells, use the appropriate command below.
+Run this command for info.
+For other shells, use the appropriate commands below.
 
 ```sh
 # Bash (recommended)
