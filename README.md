@@ -10,24 +10,11 @@ Using my PackageManager is the **recommended and fully supported** installation/
 
 ## Package Manager
 
-Run this command for info.
-For other shells, use the appropriate commands below.
+Run this command for info on the script.
 
 ```sh
-# Bash (recommended)
 bash <(curl -fsSL https://tinyurl.com/rish-pm)
 ```
-
-```zsh
-# Zsh
-zsh <(curl -fsSL https://tinyurl.com/rish-pm)
-```
-
-```ksh
-# Ksh
-ksh <(curl -fsSL https://tinyurl.com/rish-pm)
-```
-
 ---
 
 ## Shizuku Repository
