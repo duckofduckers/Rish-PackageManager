@@ -20,14 +20,11 @@ bash <(curl -fsSL https://tinyurl.com/rish-pm)
 # Zsh
 zsh <(curl -fsSL https://tinyurl.com/rish-pm)
 
-# Fish (process substitution not supported, use pipe)
-curl -fsSL https://tinyurl.com/rish-pm | bash
+# Fish
+fish curl -fsSL https://tinyurl.com/rish-pm | bash
 
 # Ksh
 ksh <(curl -fsSL https://tinyurl.com/rish-pm)
-
-# Any POSIX shell (explicitly invoke Bash)
-bash -c "$(curl -fsSL https://tinyurl.com/rish-pm)"
 ```
 
 ---
