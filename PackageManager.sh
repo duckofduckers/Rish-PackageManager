@@ -53,13 +53,10 @@ if [[ "$MODE" == "-reinstall" ]]; then
 fi
 
 if [[ "$MODE" == "-install" ]]; then
-    TMP=$(dirname "$(mktemp -u)")
+    TMP=$(mktemp -d) || { echo -e "${RED}[!] Failed to create temporary directory${X}"; exit 1; }
 
     cleanup_temp() {
-        local tmp_files=("$TMP/Shizuku.apk" "$TMP/rish" "$TMP/rish_shizuku.dex")
-        for f in "${tmp_files[@]}"; do
-            [[ -f "$f" ]] && rm -f "$f"
-        done
+        [[ -n "$TMP" && -d "$TMP" ]] && rm -rf "$TMP"
         exit 1
     }
 
@@ -78,8 +75,9 @@ if [[ "$MODE" == "-install" ]]; then
     if [[ "$MISSING" == false ]]; then
         echo -e "${BLUE}[*] rish files already exist${X}"
         INSTALL_SUCCESS=1
+        rm -rf "$TMP"
         trap - EXIT SIGINT
-        unset RED GREEN BLUE YELLOW X BIN MODE MISSING NAME INSTALL_SUCCESS
+        unset RED GREEN BLUE YELLOW X BIN MODE MISSING NAME INSTALL_SUCCESS TMP
         unset -f cleanup_temp
         exit 0
     fi
@@ -152,7 +150,7 @@ if [[ "$MODE" == "-install" ]]; then
         fi
     done
 
-    rm -f "$APK_FILE"
+    rm -rf "$TMP"
     INSTALL_SUCCESS=1
     trap - EXIT SIGINT
     unset RED GREEN BLUE YELLOW X BIN MODE MISSING NAME API_URL APK_URL TMP APK_FILE EXTRACT_FAILED INSTALL_SUCCESS SHIZUKU_PATH PKG_NAME
