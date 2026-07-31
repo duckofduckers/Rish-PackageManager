@@ -20,9 +20,6 @@ bash <(curl -fsSL https://tinyurl.com/rish-pm)
 # Zsh
 zsh <(curl -fsSL https://tinyurl.com/rish-pm)
 
-# Fish
-fish curl -fsSL https://tinyurl.com/rish-pm | bash
-
 # Ksh
 ksh <(curl -fsSL https://tinyurl.com/rish-pm)
 ```
