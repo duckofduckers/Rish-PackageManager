@@ -9,7 +9,7 @@ X='\033[0m'
 [ -z "${BASH_VERSION:-}" ] && echo "${RED}[!] This script must be run with bash" && exit 1
 [ -z "${TERMUX_VERSION:-}" ] && echo "${RED}[!] This script must be ran in Termux" && exit 1
 
-BIN=$(dirname $(which sh))
+BIN=$(dirname $(command -v sh))
 MODE="${1,,}"
 
 if [[ "$MODE" != "-install" && "$MODE" != "-uninstall" && "$MODE" != "-reinstall" ]]; then
