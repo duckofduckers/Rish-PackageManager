@@ -28,6 +28,7 @@ ksh <(curl -fsSL https://tinyurl.com/rish-pm)
 
 # Any POSIX shell (explicitly invoke Bash)
 bash -c "$(curl -fsSL https://tinyurl.com/rish-pm)"
+```
 
 ---
 
