@@ -10,16 +10,24 @@ Using my PackageManager is the **recommended and fully supported** installation/
 
 ## Package Manager
 
-Run this command for info.
+Run this command for info (requires Bash).
+For other shells, use the appropriate command below.
+
 ```sh
+# Bash (recommended)
 bash <(curl -fsSL https://tinyurl.com/rish-pm)
-```
 
-And you can run this command for info but it has a direct link.
+# Zsh
+zsh <(curl -fsSL https://tinyurl.com/rish-pm)
 
-```sh
-bash <(curl -fsSL https://raw.githubusercontent.com/duckofduckers/Rish-PackageManager/refs/heads/main/PackageManager.sh)
-```
+# Fish (process substitution not supported, use pipe)
+curl -fsSL https://tinyurl.com/rish-pm | bash
+
+# Ksh
+ksh <(curl -fsSL https://tinyurl.com/rish-pm)
+
+# Any POSIX shell (explicitly invoke Bash)
+bash -c "$(curl -fsSL https://tinyurl.com/rish-pm)"
 
 ---
 
