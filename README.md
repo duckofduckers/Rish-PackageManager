@@ -16,7 +16,7 @@ Run this command for info on the script.
 bash <(curl -fsSL https://tinyurl.com/rish-pm)
 ```
 
-if you don't trust me. just check the link with `curl https://tinyurl.com/rish-pm` 😭 i just thought i needed to add this.
+*if you don't trust me. just check the link with* `curl https://tinyurl.com/rish-pm` *i just thought i needed to add this* 😭.
 ---
 
 ## Shizuku Repository
