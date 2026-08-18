@@ -162,7 +162,7 @@ PackageManager::install() {
         fi
     done
     if [[ "$MISSING" == false ]]; then
-        echo_info "rish files already exist"
+        echo_warn "rish files already exist"
         echo_warn "Cleaning up temporary directory..."
         rm -rf "$TEMP_DIR"
         echo_success "Temporary directory removed"
@@ -235,7 +235,7 @@ PackageManager::uninstall() {
         fi
     done
     if [[ "$ANY_DELETED" == false ]]; then
-        echo_info "No rish files found"
+        echo_warn "No rish files found"
     fi
 }
 
@@ -321,7 +321,7 @@ PackageManager::main() {
             fi
         done
         if [[ "$ANY_FOUND" == false ]]; then
-            echo_info "No rish files found"
+            echo_warn "No rish files found"
         fi
         MODE="-install"
     fi
