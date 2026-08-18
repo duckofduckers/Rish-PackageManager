@@ -5,18 +5,17 @@ shopt -s inherit_errexit
 
 exec 3>&1 4>&2
 
+DEBUG=0 # dev purposes only
+
 RED='\033[1;31m'
 GREEN='\033[1;32m'
 BLUE='\033[1;34m'
 YELLOW='\033[1;33m'
 X='\033[0m'
 
-DEBUG=0
-SILENT=0
-
 readonly SCRIPT_NAME="$(basename "$0")"
 readonly LOCK_DIR="${TMPDIR:-/tmp}/${SCRIPT_NAME}.lock"
-
+SILENT=0
 echo_info()    { if [[ $SILENT -eq 0 ]]; then echo -e "${BLUE}[*] $*${X}" >&3; fi; }
 echo_warn()    { if [[ $SILENT -eq 0 ]]; then echo -e "${YELLOW}[-] $*${X}" >&3; fi; }
 echo_success() { if [[ $SILENT -eq 0 ]]; then echo -e "${GREEN}[+] $*${X}" >&3; fi; }
