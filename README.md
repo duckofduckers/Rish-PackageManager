@@ -18,6 +18,12 @@ bash <(curl -fsSL https://tinyurl.com/rish-pm)
 
 *if you don't trust me. just check the link with* `curl https://tinyurl.com/rish-pm` *i just thought i needed to add this* 😭.
 
+Or you can just use
+
+```sh
+bash <(curl -fsSL https://raw.githubusercontent.com/duckofduckers/Rish-PackageManager/refs/heads/main/PackageManager.sh)
+```
+
 ---
 
 ## Shizuku Repository
